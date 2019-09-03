@@ -24,57 +24,9 @@ provider "google" {
 // -------------------------------------------------------------------
 
 
-//--------------------------------------------------------------------
-// Variables
-variable "compute_instance_count" {}
-variable "compute_instance_disk_image" {}
-variable "compute_instance_disk_size" {}
-variable "compute_instance_machine_type" {}
 
 
 
-
-//--------------------------------------------------------------------
-// Modules
-module "compute_instance" {
-  source  = "app.terraform.io/jacobm3/compute-instance/google"
-  version = "0.1.4"
-
-  count = "${var.compute_instance_count}"
-  disk_image = "${var.compute_instance_disk_image}"
-  disk_size = "${var.compute_instance_disk_size}"
-  machine_type = "${var.compute_instance_machine_type}"
-  name_prefix = "jacobm-demo"
-  subnetwork = "${module.network_subnet.self_link}"
-}
-
-module "network_firewall" {
-  source  = "app.terraform.io/jacobm3/network-firewall/google"
-  version = "0.1.5"
-
-  name = "demo-firewall"
-  network = "${module.network.self_link}"
-  ports = ["22","80","443"]
-  protocol = "TCP"
-  source_ranges = ["0.0.0.0"]
-}
-
-module "network_subnet" {
-  source  = "app.terraform.io/jacobm3/network-subnet/google"
-  version = "0.1.2"
-
-  description = "Jacobm PMR demo subnet"
-  ip_cidr_range = "172.16.0.0/16"
-  name = "jacobm-demo"
-  vpc = "${module.network.self_link}"
-}
-
-module "network" {
-  source  = "app.terraform.io/jacobm3/network/google"
-  version = "0.1.3"
-
-  name = "jacobm-demo-network"
-}
 
 // -------------------------------------------------------------------
 
