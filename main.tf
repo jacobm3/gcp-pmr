@@ -38,7 +38,7 @@ variable "compute_instance_machine_type" {}
 // Modules
 module "compute_instance" {
   source  = "app.terraform.io/jacobm3/compute-instance/google"
-  version = "0.1.3"
+  version = "0.1.4"
 
   count = "${var.compute_instance_count}"
   disk_image = "${var.compute_instance_disk_image}"
