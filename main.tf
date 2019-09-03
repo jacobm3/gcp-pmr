@@ -53,7 +53,7 @@ module "network_firewall" {
 
   name = "demo-fw-rules"
   network = "${module.network.name}"
-  ports = "22","80","443"
+  ports = ["22","80","443"]
   protocol = "TCP"
   source_ranges = ["0.0.0.0/0"]
 }
